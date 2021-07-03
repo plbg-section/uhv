@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>UHV SCADA</title>
+    <meta name="description" content="covid-19 report" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <script src="https://morgul.github.io/ui-bootstrap4/ui-bootstrap-tpls-3.0.6.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+
+    <script>
+      angular
+        .module("app", ["ui.bootstrap"])
+        .controller("uhv", function ($scope, $http) {
+          
+          $http.get("uhv_rev1.json").then(
+            function successCallback(response) {
+              $scope.uhv = response.data;
+              console.log("data uhv : ");
+              console.log(response.data);
+            },
+            function errorCallback(response) {
+              console.log("Unable to perform get request");
+            }
+          );
+        });
+        
+        
+          
+       
+    </script>
+  </head>
+
+  <body class="contener">
+    <div ng-app="app" ng-controller="uhv">
+     <h2 class="text-center">ระบบค้นหา DCS Tag ของ RDCC Plant </h2>
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ItemName</th>
+                <th scope="col">ItemDescription</th>
+                <th scope="col">SourceAddressPV</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="col"> <input
+                  ng-model="s.ItemName"
+                  placeholder="ค้นตาม ItemName"
+                  class="form-control input-md"
+                /></th>
+                <th scope="col"> <input
+                  ng-model="s.ItemDescription"
+                  placeholder="ค้นตาม ItemDescription"
+                  class="form-control input-md"
+                /></th>
+                <th scope="col"> <input
+                  ng-model="s.SourceAddressPV"
+                  placeholder="ค้นตาม SourceAddressPV"
+                  class="form-control input-md"
+                /></th>
+              </tr>
+              <tr ng-repeat=" r in filtered=(uhv.Alltag |limitTo: 5 | filter:s) ">
+                <th><h4>{{ r.ItemName}}</h4></th>
+                <td>{{ r.ItemDescription}} </td>
+                <td>{{ r.SourceAddressPV}} </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
