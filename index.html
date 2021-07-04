@@ -37,7 +37,7 @@
         .module("app", ["ui.bootstrap"])
         .controller("uhv", function ($scope, $http) {
           
-          $http.get("uhv_rev1.json").then(
+          $http.get("uhv_rev2.json").then(
             function successCallback(response) {
               $scope.uhv = response.data;
               console.log("data uhv : ");
