@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <title>UHV SCADA</title>
-    <meta name="description" content="covid-19 report" />
+    <meta name="description" content="UHV SCADA" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -83,11 +86,11 @@
                   class="form-control input-md"
                 /></th>
               </tr>
-              <tr ng-repeat=" r in filtered=(uhv.Alltag |limitTo: 5 | filter:s) ">
-                <th><h4>{{ r.ItemName}}</h4></th>
+              <tr ng-repeat=" r in  uhv.Alltag | filter:s |limitTo: 15">
+                <td>{{ $index+1}} </td>
+                <th><h4>{{ r.ItemName }}</h4></th>
                 <td>{{ r.ItemDescription}} </td>
                 <td>{{ r.SourceAddressPV}} </td>
-              </tr>
             </tbody>
           </table>
         </div>
